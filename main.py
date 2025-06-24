@@ -26,9 +26,9 @@ def time_logging_db(activity,recordedTime):
     todayDate = datetime.today().strftime('%Y-%m-%d')
     con = sqlite3.connect("database.db")
     cur = con.cursor()
-    cur.execute ("CREATE TABLE IF NOT EXISTS Activity_Log(date TEXT, activity TEXT, time_spent REAL) ")
+    cur.execute ("CREATE TABLE IF NOT EXISTS Activity_Log(date TEXT, activity TEXT, hours REAL) ")
     # Inserting our current value for the activity
-    cur.execute("INSERT INTO Activity_Log(date, activity, time_spent) VALUES (?,?,?)", (todayDate,activity,recordedTime))
+    cur.execute("INSERT INTO Activity_Log(date, activity, hours) VALUES (?,?,?)", (todayDate,activity,recordedTime))
     con.commit()
 
     #Closing
