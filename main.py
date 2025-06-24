@@ -14,16 +14,21 @@ def time_calculation():
 
     total_time = endTime - startTime
 
-    return total_time
+    return time_conversion(total_time)
+
+def time_conversion(total_time):
+    hourlyTime = total_time.total_seconds() / 3600
+    return hourlyTime
+
 
 def time_logging_db(activity,recordedTime):
     # Getting today's date
     todayDate = datetime.today().strftime('%Y-%m-%d')
     con = sqlite3.connect("database.db")
     cur = con.cursor()
-    cur.execute ("CREATE TABLE IF NOT EXISTS Activity_Log(date TEXT, activity TEXT, time_spent TEXT) ")
+    cur.execute ("CREATE TABLE IF NOT EXISTS Activity_Log(date TEXT, activity TEXT, time_spent REAL) ")
     # Inserting our current value for the activity
-    cur.execute("INSERT INTO Activity_Log(date, activity, time_spent) VALUES (?,?,?)", (todayDate,activity,str(recordedTime)))
+    cur.execute("INSERT INTO Activity_Log(date, activity, time_spent) VALUES (?,?,?)", (todayDate,activity,recordedTime))
     con.commit()
 
     #Closing
